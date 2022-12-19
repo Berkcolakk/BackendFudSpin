@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RentalHouseManagement.Core\RentalHouseManagement.Core.csproj" />
+    <ProjectReference Include="..\RentalHouseManagement.DTO\RentalHouseManagement.Dto.csproj" />
+    <ProjectReference Include="..\RentalHouseManagement.Entities\RentalHouseManagement.Entities.csproj" />
+    <ProjectReference Include="..\RentalHouseManagement.ServiceManagers\RentalHouseManagement.ServiceManagers.csproj" />
+  </ItemGroup>
+
+</Project>
