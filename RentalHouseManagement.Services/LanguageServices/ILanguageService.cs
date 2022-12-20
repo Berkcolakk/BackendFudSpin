@@ -11,6 +11,6 @@ namespace RentalHouseManagement.Services.LanguageServices
 {
     public interface ILanguageService
     {
-        Task<Language> GetLanguage(Language language);
+        Task<Language> GetLanguage(string key);
     }
 }

@@ -17,22 +17,22 @@ namespace RentalHouseManagement.Api.Controllers
         }
         [HttpPost]
         [Route("[controller]/Login")]
-        public async Task<IActionResult> LoginWithBasicUser(UserLoginDTO userLoginDTO)
+        public async Task<IActionResult> LoginWithBasicUser(Authentication userLoginDTO)
         {
-            bool HasUser = await userService.LoginWithBasicUser(userLoginDTO);
+            AuthenticationResponse HasUser = await userService.LoginWithBasicUser(userLoginDTO);
 
-            if (!HasUser)
+            if (HasUser is null)
             {
                 return NotFound(new ResponseData()
                 {
-                    ErrorMessage = "UserName.Password.Invalid",
-                });
+                    ErrorMessage = await userService.GetLanguageByUserLanguage("UserName.Password.Invalid", HasUser.UserID)
+                }) ;
             }
 
             return Ok(new ResponseData()
             {
-                Message = "UserName.Password.Valid",
-                Data = userLoginDTO
+                Message = await userService.GetLanguageByUserLanguage("UserName.Password.Valid", HasUser.UserID),
+                Data = HasUser
             });
         }
     }
