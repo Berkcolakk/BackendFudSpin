@@ -10,6 +10,10 @@ namespace RentalHouseManagement.Entities.Entities.Users
 {
     public class User : BaseEntity
     {
+        public User()
+        {
+            PKUsersTitles = new Title();
+        }
         public string? Description { get; set; }
         public string? Identity { get; set; }
         public string? Language { get; set; } = "EN";
@@ -23,6 +27,8 @@ namespace RentalHouseManagement.Entities.Entities.Users
         public string? SecondPassword { get; set; }
         [ForeignKey("PKUsersTitles")]
         public Guid TitleID { get; set; }
-        public Title? Title { get; set; }
+        public virtual Title PKUsersTitles { get; set; }
+
+        
     }
 }

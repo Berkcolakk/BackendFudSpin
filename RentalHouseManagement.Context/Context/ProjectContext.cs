@@ -15,6 +15,8 @@ namespace RentalHouseManagement.Context.Context
         public ProjectContext(DbContextOptions<ProjectContext> options) : base(options)
         {
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+       => optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Password=5128950;Database=RentalHouseManagement");
         public DbSet<User> User { get; set; }
         public DbSet<Title> Title { get; set; }
         public DbSet<Company> Company { get; set; }
