@@ -22,7 +22,7 @@ namespace RentalHouseManagement.ServiceManagers.UserManagers
         public async Task<User> LoginWithBasicUser(UserLoginDTO userLoginDTO)
         {
             
-             return await context.User.FirstOrDefaultAsync(x => string.Equals(x.UserName, userLoginDTO.UserName, StringComparison.OrdinalIgnoreCase) && string.Equals(x.Password, userLoginDTO.Password, StringComparison.OrdinalIgnoreCase) && x.IsActive && string.Equals(x.Title.ShortName, ParameterList.BasicUser, StringComparison.OrdinalIgnoreCase)) ?? new User();
+             return await context.User.FirstOrDefaultAsync(x => string.Equals(x.UserName, userLoginDTO.UserName, StringComparison.OrdinalIgnoreCase) && string.Equals(x.Password, userLoginDTO.Password, StringComparison.OrdinalIgnoreCase) && x.IsActive && string.Equals(x.PKUsersTitles.ShortName, ParameterList.BasicUser, StringComparison.OrdinalIgnoreCase)) ?? new User();
         }
     }
 }
