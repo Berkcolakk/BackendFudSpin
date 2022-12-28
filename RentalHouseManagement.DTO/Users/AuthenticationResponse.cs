@@ -19,5 +19,6 @@ namespace RentalHouseManagement.Dto.Users
         public DateTime DateOfBirth { get; set; }
         public int Age { get { return DateTime.Now.Year - DateOfBirth.Year; } } 
         public Guid TitleID { get; set; }
+        //public string Token { get; set; }
     }
 }

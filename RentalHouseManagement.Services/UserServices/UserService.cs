@@ -5,6 +5,12 @@ using RentalHouseManagement.Dto.Users;
 using RentalHouseManagement.Services.LanguageServices;
 using RentalHouseManagement.Entities.Entities;
 using RentalHouseManagement.Context.ParameterConstant;
+using System.Security.Claims;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using RentalHouseManagement.Services.TokenServices;
 
 namespace RentalHouseManagement.Services.Services.UserServices
 {
@@ -13,13 +19,15 @@ namespace RentalHouseManagement.Services.Services.UserServices
         private readonly IGenericRepository<User> userService;
         private readonly ILanguageService languageService;
         private readonly IUserManager userManager;
-        public UserService(IGenericRepository<User> userService, IUserManager userManager, ILanguageService languageService)
+        private readonly ITokenService tokenService;
+        public UserService(IGenericRepository<User> userService, IUserManager userManager, ILanguageService languageService, ITokenService tokenService)
         {
             this.userService = userService;
             this.userManager = userManager;
             this.languageService = languageService;
+            this.tokenService = tokenService;
         }
-        public async Task<AuthenticationResponse> LoginWithBasicUser(Authentication userLoginDTO)
+        public async Task<string> LoginWithBasicUser(Authentication userLoginDTO)
         {
             if (string.IsNullOrWhiteSpace(userLoginDTO.UserName))
             {
@@ -32,21 +40,9 @@ namespace RentalHouseManagement.Services.Services.UserServices
             }
 
             User HasUser = await userManager.Authentication(userLoginDTO, UserConstant.BasicUser);
-            AuthenticationResponse authenticationResponse = new AuthenticationResponse()
-            {
-                DateOfBirth = HasUser.DateOfBirth,
-                Description = HasUser.Description,
-                Identity = HasUser.Identity,
-                Language = HasUser.Language,
-                NameSurname = HasUser.NameSurname,
-                Nationality = HasUser.Nationality,
-                PlaceOfBirth = HasUser.PlaceOfBirth,
-                TitleID = HasUser.TitleID,
-                UserName = HasUser.UserName,
-                UserID = HasUser.ID
-            };
-            return authenticationResponse;
+            return tokenService.GenerateToken(HasUser);
         }
+        
 
         public async Task<User> GetUserByUserID(Guid UserID)
         {
@@ -82,5 +78,6 @@ namespace RentalHouseManagement.Services.Services.UserServices
                 _ => key,
             };
         }
+
     }
 }

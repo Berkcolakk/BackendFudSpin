@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RentalHouseManagement.Context\RentalHouseManagement.Context.csproj" />
     <ProjectReference Include="..\RentalHouseManagement.DTO\RentalHouseManagement.Dto.csproj" />
+    <ProjectReference Include="..\RentalHouseManagement.Infrastructure\RentalHouseManagement.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

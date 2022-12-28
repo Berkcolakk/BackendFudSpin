@@ -3,6 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using RentalHouseManagement.Services.Services.UserServices;
 using RentalHouseManagement.Dto.Users;
 using RentalHouseManagement.Api.Models;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
+using RentalHouseManagement.Entities.Entities.Users;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace RentalHouseManagement.Api.Controllers
 {
@@ -15,25 +21,32 @@ namespace RentalHouseManagement.Api.Controllers
         {
             this.userService = userService;
         }
-        [HttpPost]
-        [Route("[controller]/Login")]
-        public async Task<IActionResult> LoginWithBasicUser(Authentication userLoginDTO)
+        [HttpGet]
+        [Route("[controller]/Authentication")]
+        public async Task<IActionResult> LoginWithBasicUser(string UserName,string Password)
         {
-            AuthenticationResponse HasUser = await userService.LoginWithBasicUser(userLoginDTO);
+            if (String.IsNullOrWhiteSpace(UserName) || String.IsNullOrWhiteSpace(Password))
+            {
+                return BadRequest($"{nameof(UserName)} or {nameof(UserName)} must be not null.");
+            }
+            string HasUser = await userService.LoginWithBasicUser(new Authentication() { Password = Password,UserName = UserName});
 
-            if (HasUser is null)
+            if (String.IsNullOrEmpty(HasUser))
             {
                 return NotFound(new ResponseData()
                 {
-                    ErrorMessage = await userService.GetLanguageByUserLanguage("UserName.Password.Invalid", HasUser.UserID)
+                    ErrorMessage ="UserName.Password.Invalid"
                 }) ;
             }
 
+
             return Ok(new ResponseData()
             {
-                Message = await userService.GetLanguageByUserLanguage("UserName.Password.Valid", HasUser.UserID),
+                Message = "UserName.Password.Valid",
                 Data = HasUser
             });
+
+            
         }
     }
 }

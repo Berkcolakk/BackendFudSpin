@@ -18,12 +18,9 @@ namespace RentalHouseManagement.Core.Repositories
 
         protected IDatabaseFactory DatabaseFactory { get; private set; }
 
-        public GenericRepository(IDatabaseFactory databaseFactory)
-        {
-            DatabaseFactory = databaseFactory;
-        }
+        public GenericRepository(IDatabaseFactory databaseFactory) => DatabaseFactory = databaseFactory;
 
-        protected ProjectContext DataContext => _context ?? (_context = DatabaseFactory.Get());
+        protected ProjectContext DataContext => _context ??= DatabaseFactory.Get();
 
         public virtual IQueryable<T> Table => Entities;
 
@@ -31,7 +28,7 @@ namespace RentalHouseManagement.Core.Repositories
 
         protected virtual DbSet<T> Entities => _entities ?? DataContext.Set<T>();
 
-        public virtual async Task<T> Get(Expression<Func<T, bool>> predicate) => await Entities.Where(predicate).SingleOrDefaultAsync();
+        public virtual async Task<T> Get(Expression<Func<T, bool>> predicate) => await Entities.SingleOrDefaultAsync(predicate);
 
         public virtual async ValueTask<T> GetById(object id) => await Entities.FindAsync(id);
 
@@ -47,7 +44,7 @@ namespace RentalHouseManagement.Core.Repositories
             {
                 if (entity == null)
                 {
-                    throw new ArgumentNullException("entity");
+                    throw new ArgumentNullException($"{nameof(entity)} must be not null");
                 }
 
                 await Entities.AddAsync(entity);
@@ -65,7 +62,7 @@ namespace RentalHouseManagement.Core.Repositories
             {
                 if (entities == null)
                 {
-                    throw new ArgumentNullException("entities");
+                    throw new ArgumentNullException($"{nameof(entities)} must be not null");
                 }
 
                 foreach (T entity in entities)
@@ -86,7 +83,7 @@ namespace RentalHouseManagement.Core.Repositories
             {
                 if (entity == null)
                 {
-                    throw new ArgumentNullException("entity");
+                    throw new ArgumentNullException($"{nameof(entity)} must be not null");
                 }
 
                 Entities.Attach(entity);
@@ -105,7 +102,7 @@ namespace RentalHouseManagement.Core.Repositories
             {
                 if (entities == null)
                 {
-                    throw new ArgumentNullException("entities");
+                    throw new ArgumentNullException($"{nameof(entities)} must be not null");
                 }
 
                 foreach (T entity in entities)
@@ -138,7 +135,7 @@ namespace RentalHouseManagement.Core.Repositories
             {
                 if (entity == null)
                 {
-                    throw new ArgumentNullException("entity");
+                    throw new ArgumentNullException($"{nameof(entity)} must be not null");
                 }
 
                 Entities.Remove(entity);
@@ -156,7 +153,7 @@ namespace RentalHouseManagement.Core.Repositories
             {
                 if (entities == null)
                 {
-                    throw new ArgumentNullException("entities");
+                    throw new ArgumentNullException($"{nameof(entities)} must be not null");
                 }
 
                 foreach (T entity in entities)
