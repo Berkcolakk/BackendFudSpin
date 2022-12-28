@@ -11,8 +11,8 @@ namespace RentalHouseManagement.Services.Services.UserServices
 {
     public interface IUserService
     {
-        Task<bool> LoginWithBasicUser(UserLoginDTO userLoginDTO);
+        Task<string> LoginWithBasicUser(Authentication userLoginDTO);
         Task<User> GetUserByUserID(Guid UserID);
-        Task<string> GetLanguageByUserLanguage(Language language, Guid UserID);
+        Task<string> GetLanguageByUserLanguage(string key, Guid UserID);
     }
 }

@@ -10,6 +10,6 @@ namespace RentalHouseManagement.ServiceManagers.UserManagers
 {
     public interface IUserManager
     {
-        Task<User> LoginWithBasicUser(UserLoginDTO userLoginDTO);
+        Task<User> Authentication(Authentication userLoginDTO, string UserType);
     }
 }

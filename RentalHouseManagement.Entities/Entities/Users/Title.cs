@@ -8,6 +8,6 @@ namespace RentalHouseManagement.Entities.Entities.Users
         public string? ShortName { get; set; }
         public string? Description { get; set; }
         [InverseProperty("PKUsersTitles")]
-        public virtual ICollection<User>? Users { get; set; }
+        public ICollection<User>? PKUsersTitles { get; set; }
     }
 }

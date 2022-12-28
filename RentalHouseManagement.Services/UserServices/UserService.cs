@@ -4,6 +4,13 @@ using RentalHouseManagement.ServiceManagers.UserManagers;
 using RentalHouseManagement.Dto.Users;
 using RentalHouseManagement.Services.LanguageServices;
 using RentalHouseManagement.Entities.Entities;
+using RentalHouseManagement.Context.ParameterConstant;
+using System.Security.Claims;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using RentalHouseManagement.Services.TokenServices;
 
 namespace RentalHouseManagement.Services.Services.UserServices
 {
@@ -12,13 +19,15 @@ namespace RentalHouseManagement.Services.Services.UserServices
         private readonly IGenericRepository<User> userService;
         private readonly ILanguageService languageService;
         private readonly IUserManager userManager;
-        public UserService(IGenericRepository<User> userService, IUserManager userManager, ILanguageService languageService)
+        private readonly ITokenService tokenService;
+        public UserService(IGenericRepository<User> userService, IUserManager userManager, ILanguageService languageService, ITokenService tokenService)
         {
             this.userService = userService;
             this.userManager = userManager;
             this.languageService = languageService;
+            this.tokenService = tokenService;
         }
-        public async Task<bool> LoginWithBasicUser(UserLoginDTO userLoginDTO)
+        public async Task<string> LoginWithBasicUser(Authentication userLoginDTO)
         {
             if (string.IsNullOrWhiteSpace(userLoginDTO.UserName))
             {
@@ -30,13 +39,10 @@ namespace RentalHouseManagement.Services.Services.UserServices
                 throw new ArgumentException($"'{nameof(userLoginDTO.Password)}' cannot be null or whitespace.", nameof(userLoginDTO.Password));
             }
 
-            User HasUser = await userManager.LoginWithBasicUser(userLoginDTO);
-            if (HasUser is not null)
-            {
-                return true;
-            }
-            return false;
+            User HasUser = await userManager.Authentication(userLoginDTO, UserConstant.BasicUser);
+            return tokenService.GenerateToken(HasUser);
         }
+        
 
         public async Task<User> GetUserByUserID(Guid UserID)
         {
@@ -49,11 +55,11 @@ namespace RentalHouseManagement.Services.Services.UserServices
             return user;
         }
 
-        public async Task<string> GetLanguageByUserLanguage(Language language, Guid UserID)
+        public async Task<string> GetLanguageByUserLanguage(string key, Guid UserID)
         {
-            if (language is null)
+            if (key is null)
             {
-                throw new ArgumentNullException(nameof(language));
+                throw new ArgumentNullException(nameof(key));
             }
 
             if (UserID == Guid.Empty)
@@ -63,14 +69,15 @@ namespace RentalHouseManagement.Services.Services.UserServices
 
             User user = await GetUserByUserID(UserID);
 
-            Language lang = await languageService.GetLanguage(language);
+            Language lang = await languageService.GetLanguage(key);
 
             return user.Language switch
             {
-                nameof(lang.EN) => lang.EN ?? language.Key,
-                nameof(lang.TR) => lang.TR ?? language.Key,
-                _ => language.Key,
+                nameof(lang.EN) => lang.EN ?? key,
+                nameof(lang.TR) => lang.TR ?? key,
+                _ => key,
             };
         }
+
     }
 }

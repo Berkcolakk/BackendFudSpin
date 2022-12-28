@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace RentalHouseManagement.Context.ParameterConstant
 {
-    public static class ParameterList
+    public static class UserConstant
     {
-        
+        public static string BasicUser = "BASIC";
     }
 }

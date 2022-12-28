@@ -15,9 +15,9 @@ namespace RentalHouseManagement.Services.LanguageServices
         {
             this.languageService = languageService;
         }
-        public async Task<Language> GetLanguage(Language language)
+        public async Task<Language> GetLanguage(string key)
         {
-            return await languageService.Get(x => string.Equals(x.Key, language.Key, StringComparison.OrdinalIgnoreCase) && x.IsActive);
+            return await languageService.Get(x => string.Equals(x.Key, key, StringComparison.OrdinalIgnoreCase) && x.IsActive);
         }
     }
 }
