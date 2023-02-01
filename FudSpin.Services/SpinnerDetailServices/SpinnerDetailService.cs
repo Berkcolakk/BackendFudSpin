@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace FudSpin.Services.SpinnerDetailServices
 {
-    public class SpinnerDetailServices : ISpinnerDetailServices
+    public class SpinnerDetailService : ISpinnerDetailService
     {
         private readonly IGenericRepository<SpinnerDetail> spinnerDetailService;
-        public SpinnerDetailServices(IGenericRepository<SpinnerDetail> spinnerDetailService)
+        public SpinnerDetailService(IGenericRepository<SpinnerDetail> spinnerDetailService)
         {
             this.spinnerDetailService = spinnerDetailService;
         }

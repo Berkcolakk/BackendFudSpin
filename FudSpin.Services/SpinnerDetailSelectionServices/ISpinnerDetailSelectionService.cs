@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FudSpin.Services.SpinnerDetailServices
+namespace FudSpin.Services.SpinnerDetailSelectionServices
 {
-    public interface ISpinnerDetailServices
+    public interface ISpinnerDetailSelectionService
     {
     }
 }
