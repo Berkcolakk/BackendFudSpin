@@ -17,5 +17,9 @@ namespace FudSpin.Context.Context
        => optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Password=5128950;Database=FudSpin");
         public DbSet<User> User { get; set; }
         public DbSet<Language> Language { get; set; }
+        public DbSet<SpinnerMaster> SpinnerMaster { get; set; }
+        public DbSet<SpinnerDetail> SpinnerDetail { get; set; }
+        public DbSet<SpinnerDetailSelection> SpinnerDetailSelection { get; set; }
+
     }
 }
