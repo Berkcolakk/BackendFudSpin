@@ -13,6 +13,7 @@ using FudSpin.Services.SpinnerMasterServices;
 using FudSpin.ServiceManagers.SpinnerMasterManagers;
 using FudSpin.Services.SpinnerDetailServices;
 using FudSpin.Services.SpinnerDetailSelectionServices;
+using FudSpin.Api.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +55,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureExceptionHandler();
 
 app.UseHttpsRedirection();
 
