@@ -9,5 +9,6 @@ namespace FudSpin.ServiceManagers.SpinnerDetailManagers
 {
     public interface ISpinnerDetailManager
     {
+        Task<List<SpinnerDetail>> GetAllSpinnerDetailBySpinnerMasterID(Guid MasterID);
     }
 }

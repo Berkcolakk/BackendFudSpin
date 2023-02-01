@@ -20,5 +20,10 @@ namespace FudSpin.ServiceManagers.SpinnerMasterManagers
             this.context = context;
             this.cryptographyProcessor = cryptographyProcessor;
         }
+
+        public async Task<List<SpinnerDetail>> GetAllSpinnerDetailBySpinnerMasterID(Guid MasterID)
+        {
+            return await context.SpinnerDetail.Where(x => x.SpinnerMasterID == MasterID).ToListAsync();
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace FudSpin.ServiceManagers.SpinnerDetailSelectionManagers
 {
     public interface ISpinnerDetailSelectionManager
     {
+        Task<List<SpinnerDetailSelection>> GetAllSelections();
     }
 }

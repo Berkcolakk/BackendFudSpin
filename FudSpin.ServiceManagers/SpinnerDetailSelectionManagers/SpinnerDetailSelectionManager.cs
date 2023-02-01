@@ -19,5 +19,10 @@ namespace FudSpin.ServiceManagers.SpinnerDetailSelectionManagers
             this.context = context;
             this.cryptographyProcessor = cryptographyProcessor;
         }
+
+        public async Task<List<SpinnerDetailSelection>> GetAllSelections()
+        {
+            return await context.SpinnerDetailSelection.Include(x => x.IPSpinnerDetailSelection).ThenInclude(x => x.IPSpinnerDetail).ToListAsync();
+        }
     }
 }
