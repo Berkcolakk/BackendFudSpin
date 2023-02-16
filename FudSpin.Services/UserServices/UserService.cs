@@ -33,30 +33,6 @@ namespace FudSpin.Services.Services.UserServices
             this.unitOfWork = unitOfWork;
             this.cryptographyProcessor = cryptographyProcessor;
         }
-        public async Task<string> LoginWithBasicUser(Authentication userLoginDTO)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(userLoginDTO.UserName))
-                {
-                    throw new ArgumentException($"'{nameof(userLoginDTO.UserName)}' cannot be null or whitespace.", nameof(userLoginDTO.UserName));
-                }
-
-                if (string.IsNullOrWhiteSpace(userLoginDTO.Password))
-                {
-                    throw new ArgumentException($"'{nameof(userLoginDTO.Password)}' cannot be null or whitespace.", nameof(userLoginDTO.Password));
-                }
-
-                User HasUser = await userManager.Authentication(userLoginDTO, UserConstant.BasicUser);
-                return tokenService.GenerateToken(HasUser);
-            }
-            catch (Exception)
-            {
-                return "";
-                //throw;
-            }
-        }
-
 
         public async Task<User> GetUserByUserID(Guid UserID)
         {
@@ -105,22 +81,6 @@ namespace FudSpin.Services.Services.UserServices
             {
                 return "";
                 throw;
-            }
-        }
-
-        public async Task<bool> UserCreated(User user)
-        {
-            try
-            {
-                user.Password = cryptographyProcessor.GenerateHash(user.Password);
-                await userService.Insert(user);
-                await Save();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-                //throw;
             }
         }
 

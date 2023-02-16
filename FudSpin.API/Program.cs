@@ -14,6 +14,8 @@ using FudSpin.ServiceManagers.SpinnerMasterManagers;
 using FudSpin.Services.SpinnerDetailServices;
 using FudSpin.Services.SpinnerDetailSelectionServices;
 using FudSpin.Api.Utils;
+using FudSpin.Services.Services.AccountServices;
+using FudSpin.ServiceManagers.AccountManagers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,10 @@ builder.Services.AddScoped<UnitOfWork>();
 //UserServices
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserManager, UserManager>();
+
+builder.Services.AddTransient<IAccountService, AccountService>();
+builder.Services.AddTransient<IAccountManager, AccountManager>();
+
 //LanguageServices
 builder.Services.AddTransient<ILanguageService, LanguageService>();
 builder.Services.AddTransient<ITokenService,TokenService>();

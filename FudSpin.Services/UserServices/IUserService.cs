@@ -10,9 +10,7 @@ namespace FudSpin.Services.Services.UserServices
 {
     public interface IUserService
     {
-        Task<string> LoginWithBasicUser(Authentication userLoginDTO);
         Task<User> GetUserByUserID(Guid UserID);
         Task<string> GetLanguageByUserLanguage(string key, Guid UserID);
-        Task<bool> UserCreated(User user);
     }
 }

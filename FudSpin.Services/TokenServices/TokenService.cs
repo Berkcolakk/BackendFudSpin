@@ -56,5 +56,33 @@ namespace FudSpin.Services.TokenServices
             string token = tokenHandler.WriteToken(JwtObj);
             return token;
         }
+
+        public bool ValidationToken(string jwtToken)
+        {
+            try
+            {
+                string privateKey = configuration.GetSection("JWTKey").Value ?? "";
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(privateKey);
+                tokenHandler.ValidateToken(jwtToken, new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+                var jwt = (JwtSecurityToken)validatedToken;
+                //Logging
+                //
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

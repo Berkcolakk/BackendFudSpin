@@ -6,9 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FudSpin.ServiceManagers.UserManagers
+namespace FudSpin.ServiceManagers.AccountManagers
 {
-    public interface IUserManager
+    public interface IAccountManager
     {
+        Task<User> Authentication(Authentication userLoginDTO, string UserType);
     }
 }

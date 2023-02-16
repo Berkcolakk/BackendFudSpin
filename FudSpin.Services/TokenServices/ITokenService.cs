@@ -10,5 +10,6 @@ namespace FudSpin.Services.TokenServices
     public interface ITokenService
     {
         string GenerateToken(User user);
+        bool ValidationToken(string jwtToken);
     }
 }

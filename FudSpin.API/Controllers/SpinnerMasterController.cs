@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace FudSpin.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     [AuthorizeCheckAttribute]
     public class SpinnerMasterController : ControllerBase
