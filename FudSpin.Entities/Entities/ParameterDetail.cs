@@ -25,6 +25,9 @@ namespace FudSpin.Entities.Entities
      
 
         [InverseProperty("ParameterDetail_Nationality")]
-        public virtual List<User> ParameterDetail_Nationality { get; set; }
+        public virtual List<User>? ParameterDetail_Nationality { get; set; }
+
+        [InverseProperty("ParameterDetail_Gender")]
+        public virtual List<User>? ParameterDetail_Gender { get; set; }
     }
 }

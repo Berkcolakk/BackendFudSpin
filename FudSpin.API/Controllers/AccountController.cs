@@ -55,7 +55,8 @@ namespace FudSpin.Api.Controllers
             bool UserCreated = await accountService.UserCreated(new User()
             {
                 NameSurname = user.NameSurname,
-                Nationality = user.Nationality,
+                NationalityID = user.NationalityID,
+                GenderID = user.GenderID,
                 Password = user.Password,
                 DateOfBirth = user.DateOfBirth,
                 Description = user.Description,

@@ -11,13 +11,12 @@ namespace FudSpin.Dto.Users
     {
         public string? Description { get; set; }
         public required string? Identity { get; set; }
-        public required Guid PlaceOfBirth { get; set; }
-        public required Guid Nationality { get; set; }
+        public required Guid NationalityID { get; set; }
+        public required Guid GenderID { get; set; }
         public required string? UserName { get; set; }
         public required string? NameSurname { get; set; }
         public required DateTime DateOfBirth { get; set; }
         public required string? Password { get; set; }
-        public Guid TitleID { get; set; }
-        public required Guid CompanyID { get; set; }
+        public required string? SecondPassword { get; set;}
     }
 }

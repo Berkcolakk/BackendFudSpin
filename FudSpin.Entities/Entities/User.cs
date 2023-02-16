@@ -15,8 +15,12 @@ namespace FudSpin.Entities.Entities
         public string? Language { get; set; } = "EN";
 
         [ForeignKey("ParameterDetail_Nationality")]
-        public Guid Nationality { get; set; }
+        public Guid NationalityID { get; set; }
         public virtual ParameterDetail ParameterDetail_Nationality { get; set; }
+
+        [ForeignKey("ParameterDetail_Gender")]
+        public Guid? GenderID { get; set; }
+        public virtual ParameterDetail? ParameterDetail_Gender { get; set; }
 
         public string? UserName { get; set; }
         public string? NameSurname { get; set; }
