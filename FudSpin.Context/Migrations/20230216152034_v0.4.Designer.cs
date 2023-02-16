@@ -3,6 +3,7 @@ using System;
 using FudSpin.Context.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FudSpin.Context.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    partial class ProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20230216152034_v0.4")]
+    partial class v04
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,6 +82,7 @@ namespace FudSpin.Context.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -101,12 +105,15 @@ namespace FudSpin.Context.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Value2")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Value3")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Value4")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("ID");
@@ -320,6 +327,9 @@ namespace FudSpin.Context.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("PlaceOfBirth")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("UpdDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -335,6 +345,8 @@ namespace FudSpin.Context.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("Nationality");
+
+                    b.HasIndex("PlaceOfBirth");
 
                     b.ToTable("User");
                 });
@@ -391,12 +403,22 @@ namespace FudSpin.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FudSpin.Entities.Entities.ParameterDetail", "ParameterDetail_PlaceOfBirth")
+                        .WithMany("ParameterDetail_PlaceOfBirth")
+                        .HasForeignKey("PlaceOfBirth")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("ParameterDetail_Nationality");
+
+                    b.Navigation("ParameterDetail_PlaceOfBirth");
                 });
 
             modelBuilder.Entity("FudSpin.Entities.Entities.ParameterDetail", b =>
                 {
                     b.Navigation("ParameterDetail_Nationality");
+
+                    b.Navigation("ParameterDetail_PlaceOfBirth");
                 });
 
             modelBuilder.Entity("FudSpin.Entities.Entities.ParameterMaster", b =>

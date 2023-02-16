@@ -60,7 +60,6 @@ namespace FudSpin.Api.Controllers
             {
                 NameSurname = user.NameSurname,
                 Nationality = user.Nationality,
-                PlaceOfBirth = user.PlaceOfBirth,
                 Password = user.Password,
                 DateOfBirth = user.DateOfBirth,
                 Description = user.Description,

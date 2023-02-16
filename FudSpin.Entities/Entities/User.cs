@@ -13,8 +13,11 @@ namespace FudSpin.Entities.Entities
         public string? Description { get; set; }
         public string? Identity { get; set; }
         public string? Language { get; set; } = "EN";
-        public Guid PlaceOfBirth { get; set; }
+
+        [ForeignKey("ParameterDetail_Nationality")]
         public Guid Nationality { get; set; }
+        public virtual ParameterDetail ParameterDetail_Nationality { get; set; }
+
         public string? UserName { get; set; }
         public string? NameSurname { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -22,6 +25,6 @@ namespace FudSpin.Entities.Entities
         public string? Password { get; set; }
         public string? SecondPassword { get; }
         [InverseProperty("IPSpinnerMaster")]
-        public virtual ICollection<SpinnerMaster> SpinnerMaster { get; set;}
+        public virtual ICollection<SpinnerMaster> IPSpinnerMaster { get; set;}
     }
 }

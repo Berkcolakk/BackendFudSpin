@@ -37,12 +37,11 @@ namespace FudSpin.Services.TokenServices
             var key = Encoding.ASCII.GetBytes(privateKey);
             ClaimsIdentity claimsIdentity = new(new[] {
                 new Claim("Name", user.NameSurname),
-                new Claim("Identity", user.Identity.Substring(6)),
+                new Claim("Identity", user.Identity?.Substring(6)),
                 new Claim("DateOfBirth", user.DateOfBirth.ToString()),
                 new Claim("Language", user.Language),
                 new Claim("Age", user.Age.ToString()),
-                new Claim("Nationality", user.Nationality.ToString()),
-                new Claim("PlaceOfBirth", user.PlaceOfBirth.ToString())
+                new Claim("Nationality", user.ParameterDetail_Nationality.Value),
             });
             var tokenDescriptor = new SecurityTokenDescriptor
             {
