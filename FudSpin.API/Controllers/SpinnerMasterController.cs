@@ -1,4 +1,5 @@
-﻿using FudSpin.Api.Models;
+﻿using FudSpin.Api.Filters;
+using FudSpin.Api.Models;
 using FudSpin.Dto.Users;
 using FudSpin.Entities.Entities;
 using FudSpin.Services.Services.UserServices;
@@ -11,6 +12,7 @@ namespace FudSpin.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizeCheckAttribute]
     public class SpinnerMasterController : ControllerBase
     {
         private readonly ISpinnerMasterService spinnerMasterService;
@@ -20,14 +22,14 @@ namespace FudSpin.Api.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/GetMySpinnerListByUserID")]
-        public async Task<IActionResult> GetMySpinnerListByUserID(Guid UserID)
+        [Route("[controller]/GetMySpinnerList")]
+        public async Task<IActionResult> GetMySpinnerList()
         {
-            if (Guid.Empty == UserID)
-            {
-                return BadRequest($"{nameof(UserID)} cannot be null.");
-            }
-            List<SpinnerMaster> spinnerList = await spinnerMasterService.GetMySpinnerListByUserID(UserID);
+            //if (Guid.Empty == UserID)
+            //{
+            //    return BadRequest($"{nameof(UserID)} cannot be null.");
+            //}
+            List<SpinnerMaster> spinnerList = await spinnerMasterService.GetMySpinnerListByUserID(Guid.Empty);
 
             return Ok(new ResponseData()
             {
