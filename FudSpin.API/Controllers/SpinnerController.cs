@@ -1,5 +1,6 @@
 ﻿using FudSpin.Api.Filters;
 using FudSpin.Api.Models;
+using FudSpin.Dto.Spinners;
 using FudSpin.Dto.Users;
 using FudSpin.Entities.Entities;
 using FudSpin.Services.Services.UserServices;
@@ -48,7 +49,7 @@ namespace FudSpin.Api.Controllers
             {
                 return BadRequest($"{nameof(MasterID)} cannot be null.");
             }
-            List<SpinnerDetail> spinnerList = await spinnerDetailService.GetSpinnerDetailByMasterID(MasterID);
+            SpinnerMasterDTO spinnerList = await spinnerDetailService.GetSpinnerDetailByMasterID(MasterID);
 
             return Ok(new ResponseData()
             {
@@ -56,20 +57,39 @@ namespace FudSpin.Api.Controllers
             });
         }
         [HttpPost]
-        [Route("[controller]/Authentication")]
-        public async Task<IActionResult> AddSpinnerMaster(SpinnerMaster spinnerMaster)
+        [Route("[controller]/AddMySpinner")]
+        public async Task<IActionResult> AddMySpinner(SpinnerAdd spinner)
         {
-            if (String.IsNullOrWhiteSpace(spinnerMaster.Name))
+            if (String.IsNullOrWhiteSpace(spinner.SpinnerMaster.Name))
             {
-                return BadRequest($"{nameof(spinnerMaster.Name)} cannot be null.");
+                return BadRequest($"{nameof(spinner.SpinnerMaster.Name)} cannot be null.");
             }
-            bool hasAdded = await spinnerMasterService.Add(spinnerMaster);
+            Guid MasterID = await spinnerMasterService.ReturnIDAndAdd(new SpinnerMaster()
+            {
+                Name = spinner.SpinnerMaster.Name,
+                Description = spinner.SpinnerMaster.Description,
+                UserID = Guid.Parse("c91dbe3f-ad3a-4b0a-b90a-6ff3e7506f6e")
+            });
 
-            if (!hasAdded)
+            if (MasterID == Guid.Empty)
             {
                 return BadRequest();
             }
-            return Ok();
+            for (int i = 0; i < spinner.SpinnerDetails.Count; i++)
+            {
+                await spinnerDetailService.MultipleAdd(new List<SpinnerDetail>()
+                {
+                    new SpinnerDetail()
+                    {
+                        Color = spinner.SpinnerDetails[i].Color,
+                        Name = spinner.SpinnerDetails[i].Name,
+                        Description = spinner.SpinnerDetails[i].Description,
+                        SpinnerMasterID = MasterID
+                    }
+                });
+            }
+            SpinnerMasterDTO spinnerList = await spinnerDetailService.GetSpinnerDetailByMasterID(MasterID);
+            return Ok(spinnerList);
         }
     }
 }

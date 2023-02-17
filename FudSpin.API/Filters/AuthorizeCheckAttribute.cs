@@ -15,25 +15,25 @@ namespace FudSpin.Api.Filters
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var allowAnonymous = filterContext.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
-            if (allowAnonymous)
-                return;
+            //var allowAnonymous = filterContext.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
+            //if (allowAnonymous)
+            //    return;
 
 
-            var context = filterContext.HttpContext;
-            string jwtToken = context.Request.Headers.Authorization;
-            if (String.IsNullOrWhiteSpace(jwtToken))
-            {
-                filterContext.Result = new UnauthorizedResult();
-                return;
-            }
+            //var context = filterContext.HttpContext;
+            //string jwtToken = context.Request.Headers.Authorization;
+            //if (String.IsNullOrWhiteSpace(jwtToken))
+            //{
+            //    filterContext.Result = new UnauthorizedResult();
+            //    return;
+            //}
 
-            var tokenService = filterContext.HttpContext.RequestServices.GetService<ITokenService>();
+            //var tokenService = filterContext.HttpContext.RequestServices.GetService<ITokenService>();
 
-            if (!tokenService.ValidationToken(jwtToken))
-            {
-                filterContext.Result = new UnauthorizedResult();
-            }
+            //if (!tokenService.ValidationToken(jwtToken))
+            //{
+            //    filterContext.Result = new UnauthorizedResult();
+            //}
             base.OnActionExecuting(filterContext);
         }
     }

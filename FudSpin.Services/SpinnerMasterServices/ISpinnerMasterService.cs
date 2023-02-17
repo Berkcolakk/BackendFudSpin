@@ -11,6 +11,6 @@ namespace FudSpin.Services.SpinnerMasterServices
     public interface ISpinnerMasterService
     {
         Task<List<SpinnerMaster>> GetMySpinnerListByUserID(Guid UserID);
-        Task<bool> Add(SpinnerMaster spinnerMaster);
+        Task<Guid> ReturnIDAndAdd(SpinnerMaster spinnerMaster);
     }
 }
