@@ -10,5 +10,6 @@ namespace FudSpin.Services.SpinnerDetailServices
 {
     public interface ISpinnerDetailService
     {
+        Task<List<SpinnerDetail>> GetSpinnerDetailByMasterID(Guid MasterID);
     }
 }

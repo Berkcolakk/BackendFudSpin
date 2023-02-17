@@ -1,5 +1,6 @@
 ﻿using FudSpin.Core.Repositories;
 using FudSpin.Entities.Entities;
+using FudSpin.ServiceManagers.SpinnerMasterManagers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace FudSpin.Services.SpinnerDetailServices
         public SpinnerDetailService(IGenericRepository<SpinnerDetail> spinnerDetailService)
         {
             this.spinnerDetailService = spinnerDetailService;
+        }
+        public async Task<List<SpinnerDetail>> GetSpinnerDetailByMasterID(Guid MasterID)
+        {
+            return await spinnerDetailService.GetMany(x => x.SpinnerMasterID == MasterID);
         }
     }
 }
