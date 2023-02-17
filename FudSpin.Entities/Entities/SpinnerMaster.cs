@@ -12,9 +12,10 @@ namespace FudSpin.Entities.Entities
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
+        public bool IsDefault { get; set; } = false;
         [ForeignKey("IPSpinnerMaster")]
-        public Guid UserID { get; set; }
-        public virtual User IPSpinnerMaster { get; set; }
+        public Guid? UserID { get; set; }
+        public virtual User? IPSpinnerMaster { get; set; }
         [InverseProperty("IPSpinnerDetail")]
         public virtual ICollection<SpinnerDetail> IPSpinnerDetail { get; set; }
     }

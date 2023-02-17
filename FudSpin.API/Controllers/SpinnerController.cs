@@ -29,11 +29,19 @@ namespace FudSpin.Api.Controllers
         [Route("[controller]/GetMyMasterSpinnerList")]
         public async Task<IActionResult> GetMyMasterSpinnerList()
         {
-            //if (Guid.Empty == UserID)
-            //{
-            //    return BadRequest($"{nameof(UserID)} cannot be null.");
-            //}
-            List<SpinnerMaster> spinnerList = await spinnerMasterService.GetMySpinnerListByUserID(Guid.Empty);
+            List<SpinnerMasterDTO> spinnerList = await spinnerMasterService.GetMySpinnerListByUserID(Guid.Parse("c91dbe3f-ad3a-4b0a-b90a-6ff3e7506f6e"), false);
+
+            return Ok(new ResponseData()
+            {
+                Data = spinnerList
+            });
+        }
+
+        [HttpGet]
+        [Route("[controller]/GetDefaultSpinnerList")]
+        public async Task<IActionResult> GetDefaultSpinnerList()
+        {
+            List<SpinnerMasterDTO> spinnerList = await spinnerMasterService.GetMySpinnerListByUserID(null, true);
 
             return Ok(new ResponseData()
             {

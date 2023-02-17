@@ -9,6 +9,6 @@ namespace FudSpin.ServiceManagers.SpinnerMasterManagers
 {
     public interface ISpinnerMasterManager
     {
-        Task<List<SpinnerMaster>> GetMySpinnerListByUserID(Guid UserID);
+        Task<List<SpinnerMaster>> GetMySpinnerListByUserID(Guid? UserID, bool IsDefault);
     }
 }

@@ -20,9 +20,9 @@ namespace FudSpin.ServiceManagers.SpinnerMasterManagers
             this.cryptographyProcessor = cryptographyProcessor;
         }
 
-        public async Task<List<SpinnerMaster>> GetMySpinnerListByUserID(Guid UserID)
+        public async Task<List<SpinnerMaster>> GetMySpinnerListByUserID(Guid? UserID,bool IsDefault)
         {
-            return await context.SpinnerMaster.Where(x => x.UserID == UserID && x.IsActive).ToListAsync();
+            return await context.SpinnerMaster.Where(x => x.UserID == null && x.IsActive && x.IsDefault == IsDefault).Include(x => x.IPSpinnerDetail.Where(x => x.IsActive)).ToListAsync();
         }
     }
 }

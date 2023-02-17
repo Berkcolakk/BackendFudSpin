@@ -1,4 +1,5 @@
 ﻿using FudSpin.Core.Repositories;
+using FudSpin.Dto.Spinners;
 using FudSpin.Entities.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace FudSpin.Services.SpinnerMasterServices
 {
     public interface ISpinnerMasterService
     {
-        Task<List<SpinnerMaster>> GetMySpinnerListByUserID(Guid UserID);
+        Task<List<SpinnerMasterDTO>> GetMySpinnerListByUserID(Guid? UserID, bool IsDefault);
         Task<Guid> ReturnIDAndAdd(SpinnerMaster spinnerMaster);
     }
 }
