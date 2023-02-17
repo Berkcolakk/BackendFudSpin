@@ -1,4 +1,5 @@
-﻿using FudSpin.Entities.Entities;
+﻿using FudSpin.Dto.Tokens;
+using FudSpin.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace FudSpin.Services.TokenServices
     public interface ITokenService
     {
         string GenerateToken(User user);
-        bool ValidationToken(string jwtToken);
+        TokenDTO ValidationToken(string jwtToken);
     }
 }

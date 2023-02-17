@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using FudSpin.Dto.Tokens;
 
 namespace FudSpin.Services.TokenServices
 {
@@ -36,6 +37,7 @@ namespace FudSpin.Services.TokenServices
 
             var key = Encoding.ASCII.GetBytes(privateKey);
             ClaimsIdentity claimsIdentity = new(new[] {
+                new Claim("UserID", user.ID.ToString()),
                 new Claim("Name", user.NameSurname),
                 new Claim("Identity", user.Identity?.Substring(6)),
                 new Claim("DateOfBirth", user.DateOfBirth.ToString()),
@@ -57,7 +59,7 @@ namespace FudSpin.Services.TokenServices
             return token;
         }
 
-        public bool ValidationToken(string jwtToken)
+        public TokenDTO ValidationToken(string jwtToken)
         {
             try
             {
@@ -75,13 +77,26 @@ namespace FudSpin.Services.TokenServices
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
                 var jwt = (JwtSecurityToken)validatedToken;
-                //Logging
-                //
-                return true;
+                TokenDTO token = new()
+                {
+                    ID = Guid.Parse(jwt.Claims.First(x => x.Type == "UserID").Value),
+                    NameSurname = jwt.Claims.First(x => x.Type == "Name").Value,
+                    Language = jwt.Claims.First(x => x.Type == "Language").Value,
+                    IsValid = true
+                };
+
+                return token;
             }
             catch (Exception)
             {
-                return false;
+                return new TokenDTO()
+                {
+                    IsValid = false,
+                    ID = Guid.Empty,
+                    Language = "",
+                    NameSurname = ""
+                }
+                ;
             }
         }
     }

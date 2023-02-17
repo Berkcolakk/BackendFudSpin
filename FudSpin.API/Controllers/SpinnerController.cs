@@ -1,4 +1,5 @@
-﻿using FudSpin.Api.Filters;
+﻿using FudSpin.Api.Controllers.Base;
+using FudSpin.Api.Filters;
 using FudSpin.Api.Models;
 using FudSpin.Dto.Spinners;
 using FudSpin.Dto.Users;
@@ -14,10 +15,11 @@ namespace FudSpin.Api.Controllers
 {
     [ApiController]
     [AuthorizeCheckAttribute]
-    public class SpinnerController : ControllerBase
+    public class SpinnerController : BaseController
     {
         private readonly ISpinnerMasterService spinnerMasterService;
         private readonly ISpinnerDetailService spinnerDetailService;
+        private readonly string[] ColorList = new string[] { "#7DB9B6", "#E96479", "#AD7BE9", "#3E54AC", "#183A1D", "#B3005E", "#18122B", "#F94A29", "#FCE22A", "#B99B6B", "#698269", "#F1DBBF", "#AA5656" };
         public SpinnerController(ISpinnerMasterService spinnerMasterService,
             ISpinnerDetailService spinnerDetailService)
         {
@@ -29,7 +31,8 @@ namespace FudSpin.Api.Controllers
         [Route("[controller]/GetMyMasterSpinnerList")]
         public async Task<IActionResult> GetMyMasterSpinnerList()
         {
-            List<SpinnerMasterDTO> spinnerList = await spinnerMasterService.GetMySpinnerListByUserID(Guid.Parse("c91dbe3f-ad3a-4b0a-b90a-6ff3e7506f6e"), false);
+            User user = GetUserByJWTToken();
+            List<SpinnerMasterDTO> spinnerList = await spinnerMasterService.GetMySpinnerListByUserID(user.ID, false);
 
             return Ok(new ResponseData()
             {
@@ -41,6 +44,7 @@ namespace FudSpin.Api.Controllers
         [Route("[controller]/GetDefaultSpinnerList")]
         public async Task<IActionResult> GetDefaultSpinnerList()
         {
+            User user = GetUserByJWTToken();
             List<SpinnerMasterDTO> spinnerList = await spinnerMasterService.GetMySpinnerListByUserID(null, true);
 
             return Ok(new ResponseData()
@@ -53,6 +57,7 @@ namespace FudSpin.Api.Controllers
         [Route("[controller]/GetSpinnerDetailByMasterID")]
         public async Task<IActionResult> GetSpinnerDetailByMasterID(Guid MasterID)
         {
+            User user = GetUserByJWTToken();
             if (Guid.Empty == MasterID)
             {
                 return BadRequest($"{nameof(MasterID)} cannot be null.");
@@ -68,6 +73,7 @@ namespace FudSpin.Api.Controllers
         [Route("[controller]/AddMySpinner")]
         public async Task<IActionResult> AddMySpinner(SpinnerAdd spinner)
         {
+            User user = GetUserByJWTToken();
             if (String.IsNullOrWhiteSpace(spinner.SpinnerMaster.Name))
             {
                 return BadRequest($"{nameof(spinner.SpinnerMaster.Name)} cannot be null.");

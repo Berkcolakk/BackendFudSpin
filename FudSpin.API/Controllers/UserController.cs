@@ -10,11 +10,12 @@ using System.Security.Claims;
 using System.Text;
 using System.Collections.Generic;
 using FudSpin.Entities.Entities;
+using FudSpin.Api.Controllers.Base;
 
 namespace FudSpin.Api.Controllers
 {
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
         private readonly IUserService userService;
         public UserController(IUserService userService)

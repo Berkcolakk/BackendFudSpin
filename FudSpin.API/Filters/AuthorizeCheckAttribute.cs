@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using FudSpin.Services.TokenServices;
+using FudSpin.Dto.Tokens;
 
 namespace FudSpin.Api.Filters
 {
@@ -15,25 +16,25 @@ namespace FudSpin.Api.Filters
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            //var allowAnonymous = filterContext.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
-            //if (allowAnonymous)
-            //    return;
+            var allowAnonymous = filterContext.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
+            if (allowAnonymous)
+                return;
 
 
-            //var context = filterContext.HttpContext;
-            //string jwtToken = context.Request.Headers.Authorization;
-            //if (String.IsNullOrWhiteSpace(jwtToken))
-            //{
-            //    filterContext.Result = new UnauthorizedResult();
-            //    return;
-            //}
+            var context = filterContext.HttpContext;
+            string jwtToken = context.Request.Headers.Authorization;
+            if (String.IsNullOrWhiteSpace(jwtToken))
+            {
+                filterContext.Result = new UnauthorizedResult();
+                return;
+            }
 
-            //var tokenService = filterContext.HttpContext.RequestServices.GetService<ITokenService>();
-
-            //if (!tokenService.ValidationToken(jwtToken))
-            //{
-            //    filterContext.Result = new UnauthorizedResult();
-            //}
+            var tokenService = filterContext.HttpContext.RequestServices.GetService<ITokenService>();
+            TokenDTO token = tokenService.ValidationToken(jwtToken);
+            if (!token.IsValid)
+            {
+                filterContext.Result = new UnauthorizedResult();
+            }
             base.OnActionExecuting(filterContext);
         }
     }

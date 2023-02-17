@@ -1,4 +1,5 @@
-﻿using FudSpin.Api.Models;
+﻿using FudSpin.Api.Controllers.Base;
+using FudSpin.Api.Models;
 using FudSpin.Dto.Users;
 using FudSpin.Entities.Entities;
 using FudSpin.Services.Services.AccountServices;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FudSpin.Api.Controllers
 {
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController
     {
         private readonly IAccountService accountService;
         public AccountController(IAccountService accountService)
