@@ -19,7 +19,6 @@ namespace FudSpin.Api.Controllers
     {
         private readonly ISpinnerMasterService spinnerMasterService;
         private readonly ISpinnerDetailService spinnerDetailService;
-        private readonly string[] ColorList = new string[] { "#7DB9B6", "#E96479", "#AD7BE9", "#3E54AC", "#183A1D", "#B3005E", "#18122B", "#F94A29", "#FCE22A", "#B99B6B", "#698269", "#F1DBBF", "#AA5656" };
         public SpinnerController(ISpinnerMasterService spinnerMasterService,
             ISpinnerDetailService spinnerDetailService)
         {
@@ -89,18 +88,23 @@ namespace FudSpin.Api.Controllers
             {
                 return BadRequest();
             }
+            List<string> ColorList = new() { "#7DB9B6", "#E96479", "#AD7BE9", "#3E54AC", "#183A1D", "#B3005E", "#18122B", "#F94A29", "#FCE22A", "#B99B6B", "#698269", "#F1DBBF", "#AA5656" };
+            Random random = new();
+            ;
             for (int i = 0; i < spinner.SpinnerDetails.Count; i++)
             {
+                int randomIndex = random.Next(ColorList.Count - 1);
                 await spinnerDetailService.MultipleAdd(new List<SpinnerDetail>()
                 {
                     new SpinnerDetail()
                     {
-                        Color = spinner.SpinnerDetails[i].Color,
+                        Color = ColorList[randomIndex],
                         Name = spinner.SpinnerDetails[i].Name,
                         Description = spinner.SpinnerDetails[i].Description,
                         SpinnerMasterID = MasterID
                     }
                 });
+                ColorList.RemoveAt(randomIndex);
             }
             SpinnerMasterDTO spinnerList = await spinnerDetailService.GetSpinnerDetailByMasterID(MasterID);
             return Ok(spinnerList);
