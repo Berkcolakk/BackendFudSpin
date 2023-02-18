@@ -1,36 +1,38 @@
-﻿using FudSpin.Api.Controllers.Base;
-using FudSpin.Api.Filters;
+﻿using FudSpin.Api.Filters;
 using FudSpin.Api.Models;
 using FudSpin.Dto.Spinners;
-using FudSpin.Dto.Users;
+using FudSpin.Dto.Tokens;
 using FudSpin.Entities.Entities;
-using FudSpin.Services.Services.UserServices;
 using FudSpin.Services.SpinnerDetailServices;
 using FudSpin.Services.SpinnerMasterServices;
+using FudSpin.Services.TokenServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace FudSpin.Api.Controllers
 {
     [ApiController]
     [AuthorizeCheckAttribute]
-    public class SpinnerController : BaseController
+    public class SpinnerController : ControllerBase
     {
         private readonly ISpinnerMasterService spinnerMasterService;
         private readonly ISpinnerDetailService spinnerDetailService;
+        private readonly ITokenService tokenService;
         public SpinnerController(ISpinnerMasterService spinnerMasterService,
-            ISpinnerDetailService spinnerDetailService)
+            ISpinnerDetailService spinnerDetailService,
+             ITokenService tokenService)
         {
             this.spinnerMasterService = spinnerMasterService;
             this.spinnerDetailService = spinnerDetailService;
+            this.tokenService = tokenService;
         }
 
         [HttpGet]
         [Route("[controller]/GetMyMasterSpinnerList")]
         public async Task<IActionResult> GetMyMasterSpinnerList()
         {
-            User user = GetUserByJWTToken();
+
+            TokenDTO user = tokenService.ValidationToken(HttpContext.Request.Headers.Authorization);
             List<SpinnerMasterDTO> spinnerList = await spinnerMasterService.GetMySpinnerListByUserID(user.ID, false);
 
             return Ok(new ResponseData()
@@ -43,7 +45,7 @@ namespace FudSpin.Api.Controllers
         [Route("[controller]/GetDefaultSpinnerList")]
         public async Task<IActionResult> GetDefaultSpinnerList()
         {
-            User user = GetUserByJWTToken();
+            TokenDTO user = tokenService.ValidationToken(HttpContext.Request.Headers.Authorization);
             List<SpinnerMasterDTO> spinnerList = await spinnerMasterService.GetMySpinnerListByUserID(null, true);
 
             return Ok(new ResponseData()
@@ -56,7 +58,7 @@ namespace FudSpin.Api.Controllers
         [Route("[controller]/GetSpinnerDetailByMasterID")]
         public async Task<IActionResult> GetSpinnerDetailByMasterID(Guid MasterID)
         {
-            User user = GetUserByJWTToken();
+            TokenDTO user = tokenService.ValidationToken(HttpContext.Request.Headers.Authorization);
             if (Guid.Empty == MasterID)
             {
                 return BadRequest($"{nameof(MasterID)} cannot be null.");
@@ -72,7 +74,7 @@ namespace FudSpin.Api.Controllers
         [Route("[controller]/AddMySpinner")]
         public async Task<IActionResult> AddMySpinner(SpinnerAdd spinner)
         {
-            User user = GetUserByJWTToken();
+            TokenDTO user = tokenService.ValidationToken(HttpContext.Request.Headers.Authorization);
             if (String.IsNullOrWhiteSpace(spinner.SpinnerMaster.Name))
             {
                 return BadRequest($"{nameof(spinner.SpinnerMaster.Name)} cannot be null.");

@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using FudSpin.Dto.Tokens;
+using Microsoft.AspNetCore.Http;
 
 namespace FudSpin.Services.TokenServices
 {
@@ -67,13 +68,12 @@ namespace FudSpin.Services.TokenServices
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(privateKey);
-                tokenHandler.ValidateToken(jwtToken, new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                tokenHandler.ValidateToken(jwtToken, new TokenValidationParameters()
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
                 var jwt = (JwtSecurityToken)validatedToken;
@@ -95,8 +95,7 @@ namespace FudSpin.Services.TokenServices
                     ID = Guid.Empty,
                     Language = "",
                     NameSurname = ""
-                }
-                ;
+                };
             }
         }
     }
