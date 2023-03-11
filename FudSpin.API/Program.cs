@@ -17,43 +17,20 @@ using FudSpin.Api.Utils;
 using FudSpin.Services.Services.AccountServices;
 using FudSpin.ServiceManagers.AccountManagers;
 using FudSpin.ServiceManagers.SpinnerDetailManagers;
+using FudSpin.Business.DependencyResolvers.Microsoft;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers().AddNewtonsoftJson(x =>x.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddDbContext<ProjectContext>(x => x.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
-builder.Services.AddDbContext<ProjectContext>();
+builder.Services.AddDependencies(builder.Configuration);
 
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-builder.Services.AddScoped<IDatabaseFactory, DatabaseFactory>();
-builder.Services.AddTransient<ICryptographyProcessor, CryptographyProcessor>();
-builder.Services.AddScoped<UnitOfWork>();
-
-//UserServices
-builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IUserManager, UserManager>();
-
-builder.Services.AddTransient<IAccountService, AccountService>();
-builder.Services.AddTransient<IAccountManager, AccountManager>();
-
-//LanguageServices
-builder.Services.AddTransient<ILanguageService, LanguageService>();
-builder.Services.AddTransient<ITokenService,TokenService>();
-//SpinnerMasterServices
-builder.Services.AddTransient<ISpinnerMasterService, SpinnerMasterService>();
-builder.Services.AddTransient<ISpinnerMasterManager, SpinnerMasterManager>();
-//SpinnerDetailServices
-builder.Services.AddTransient<ISpinnerDetailService, SpinnerDetailService>();
-builder.Services.AddTransient<ISpinnerDetailManager, SpinnerDetailManager>();
-//SpinnerDetailSelectionServices
-builder.Services.AddTransient<ISpinnerDetailSelectionService, SpinnerDetailSelectionService>();
-//builder.Services.AddTransient<ISpinnerDetailSelectionManager, SpinnerDetailSelectionManager>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,6 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.ConfigureExceptionHandler();
 

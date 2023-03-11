@@ -6,6 +6,7 @@ using FudSpin.Entities.Entities;
 using FudSpin.Services.SpinnerDetailServices;
 using FudSpin.Services.SpinnerMasterServices;
 using FudSpin.Services.TokenServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,6 +44,7 @@ namespace FudSpin.Api.Controllers
 
         [HttpGet]
         [Route("[controller]/GetDefaultSpinnerList")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetDefaultSpinnerList()
         {
             TokenDTO user = tokenService.ValidationToken(HttpContext.Request.Headers.Authorization);

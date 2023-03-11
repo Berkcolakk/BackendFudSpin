@@ -21,7 +21,7 @@ namespace FudSpin.Infrastructure.Cryptography
             string salt = CreateSalt(int.Parse(configuration.GetSection("SaltKey").Value));
 
             byte[] bytes = Encoding.UTF8.GetBytes(input);
-            SHA256Managed sHA256ManagedString = new();
+            using SHA256Managed sHA256ManagedString = new();
             byte[] hash = sHA256ManagedString.ComputeHash(bytes);
             return Convert.ToBase64String(hash);
         }

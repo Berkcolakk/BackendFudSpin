@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FudSpin.Business\FudSpin.Business.csproj" />
     <ProjectReference Include="..\FudSpin.Services\FudSpin.Services.csproj" />
   </ItemGroup>
 

@@ -85,7 +85,6 @@ namespace FudSpin.Core.Repositories
                 {
                     throw new ArgumentNullException($"{nameof(entity)} must be not null");
                 }
-
                 Entities.Attach(entity);
                 DataContext.Entry(entity).State = EntityState.Modified;
             }

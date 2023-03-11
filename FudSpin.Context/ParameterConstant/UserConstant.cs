@@ -8,6 +8,6 @@ namespace FudSpin.Context.ParameterConstant
 {
     public static class UserConstant
     {
-        public static string BasicUser = "BASIC";
+        public const string BasicUser = "BASIC";
     }
 }
