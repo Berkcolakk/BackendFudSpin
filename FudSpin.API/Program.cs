@@ -22,7 +22,6 @@ using FudSpin.Business.DependencyResolvers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddControllers().AddNewtonsoftJson(x =>x.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 builder.Services.AddEndpointsApiExplorer();

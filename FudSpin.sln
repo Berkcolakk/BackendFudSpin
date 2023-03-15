@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FudSpin.ServiceManagers", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{995582EF-A398-4031-A0C2-324BAA100C06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FudSpin.Business", "FudSpin.Business\FudSpin.Business.csproj", "{FA11174A-BC13-45D9-A201-AA7AF120F676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FudSpin.Business", "FudSpin.Business\FudSpin.Business.csproj", "{FA11174A-BC13-45D9-A201-AA7AF120F676}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FudSpin.Utilities", "FudSpin.Utilities\FudSpin.Utilities.csproj", "{5F366DB1-5BBD-49CC-9686-311FC0351C56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{FA11174A-BC13-45D9-A201-AA7AF120F676}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA11174A-BC13-45D9-A201-AA7AF120F676}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA11174A-BC13-45D9-A201-AA7AF120F676}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F366DB1-5BBD-49CC-9686-311FC0351C56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F366DB1-5BBD-49CC-9686-311FC0351C56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F366DB1-5BBD-49CC-9686-311FC0351C56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F366DB1-5BBD-49CC-9686-311FC0351C56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +93,7 @@ Global
 		{928C0363-5372-4149-B824-EDB3F0EEB0D6} = {64228445-6CDD-4F88-ACB7-CCD2D0044A50}
 		{A45CDDB4-D0C8-4A51-BF64-9B259AED7F82} = {9A881677-49EB-41B0-86EB-F2915A431038}
 		{FA11174A-BC13-45D9-A201-AA7AF120F676} = {995582EF-A398-4031-A0C2-324BAA100C06}
+		{5F366DB1-5BBD-49CC-9686-311FC0351C56} = {995582EF-A398-4031-A0C2-324BAA100C06}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB1E47FA-519B-470D-BFE0-656FFB9E1A20}
