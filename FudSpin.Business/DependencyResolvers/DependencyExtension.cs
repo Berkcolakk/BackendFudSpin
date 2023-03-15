@@ -17,7 +17,7 @@ using FudSpin.Core.UnitOfWork;
 using FudSpin.Services.Services.UserServices;
 using FudSpin.ServiceManagers.UserManagers;
 
-namespace FudSpin.Business.DependencyResolvers.Microsoft
+namespace FudSpin.Business.DependencyResolvers
 {
     public static class DependencyExtension
     {

@@ -17,8 +17,8 @@ using FudSpin.Api.Utils;
 using FudSpin.Services.Services.AccountServices;
 using FudSpin.ServiceManagers.AccountManagers;
 using FudSpin.ServiceManagers.SpinnerDetailManagers;
-using FudSpin.Business.DependencyResolvers.Microsoft;
 using Newtonsoft.Json.Serialization;
+using FudSpin.Business.DependencyResolvers;
 
 var builder = WebApplication.CreateBuilder(args);
 

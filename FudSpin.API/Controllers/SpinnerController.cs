@@ -85,7 +85,7 @@ namespace FudSpin.Api.Controllers
             {
                 Name = spinner.SpinnerMaster.Name,
                 Description = spinner.SpinnerMaster.Description,
-                UserID = Guid.Parse("c91dbe3f-ad3a-4b0a-b90a-6ff3e7506f6e")
+                UserID = user.ID
             });
 
             if (MasterID == Guid.Empty)
@@ -94,7 +94,6 @@ namespace FudSpin.Api.Controllers
             }
             List<string> ColorList = new() { "#7DB9B6", "#E96479", "#AD7BE9", "#3E54AC", "#183A1D", "#B3005E", "#18122B", "#F94A29", "#FCE22A", "#B99B6B", "#698269", "#F1DBBF", "#AA5656" };
             Random random = new();
-            ;
             for (int i = 0; i < spinner.SpinnerDetails.Count; i++)
             {
                 int randomIndex = random.Next(ColorList.Count - 1);
