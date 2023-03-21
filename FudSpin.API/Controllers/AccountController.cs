@@ -2,10 +2,12 @@
 using FudSpin.Dto.Users;
 using FudSpin.Entities.Entities;
 using FudSpin.Services.Services.AccountServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FudSpin.Api.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     public class AccountController : ControllerBase
     {
