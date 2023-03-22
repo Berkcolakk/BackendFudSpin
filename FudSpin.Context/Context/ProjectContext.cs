@@ -14,7 +14,7 @@ namespace FudSpin.Context.Context
         {
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-       => optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Password=05128950;Database=FudSpin;");
+       => optionsBuilder.UseNpgsql(@"Server=fudspin.postgres.database.azure.com;Database=postgres;Port=5432;User Id=berkcolak;Password=fudspin!1;");
         public DbSet<User> User { get; set; }
         public DbSet<Language> Language { get; set; }
         public DbSet<SpinnerMaster> SpinnerMaster { get; set; }

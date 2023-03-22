@@ -31,7 +31,7 @@ namespace FudSpin.Api.Controllers
             {
                 return NotFound(new ResponseData()
                 {
-                    ErrorMessage = "UserName.Password.Invalid"
+                    ErrorMessage = "UserName.Password.InvalidD"
                 });
             }
 
