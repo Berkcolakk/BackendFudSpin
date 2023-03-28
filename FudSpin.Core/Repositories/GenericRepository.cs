@@ -85,8 +85,7 @@ namespace FudSpin.Core.Repositories
                 {
                     throw new ArgumentNullException($"{nameof(entity)} must be not null");
                 }
-                Entities.Attach(entity);
-                DataContext.Entry(entity).State = EntityState.Modified;
+                Entities.Update(entity);
             }
             catch (Exception dbEx)
             {
@@ -103,12 +102,7 @@ namespace FudSpin.Core.Repositories
                 {
                     throw new ArgumentNullException($"{nameof(entities)} must be not null");
                 }
-
-                foreach (T entity in entities)
-                {
-                    Entities.Attach(entity);
-                    DataContext.Entry(entity).State = EntityState.Modified;
-                }
+                Entities.UpdateRange(entities);
             }
             catch (Exception dbEx)
             {

@@ -55,6 +55,7 @@ namespace FudSpin.Business.DependencyResolvers
             //SpinnerDetailSelectionServices
             services.AddTransient<ISpinnerDetailSelectionService, SpinnerDetailSelectionService>();
             //services.AddTransient<ISpinnerDetailSelectionManager, SpinnerDetailSelectionManager>();
+            services.AddHttpContextAccessor();
         }
     }
 }
