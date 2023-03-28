@@ -4,6 +4,7 @@ using FudSpin.Entities.Entities;
 using FudSpin.Services.Services.AccountServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace FudSpin.Api.Controllers
 {
@@ -19,6 +20,7 @@ namespace FudSpin.Api.Controllers
 
         [HttpPost]
         [Route("[controller]/Authentication")]
+        //[EnableRateLimiting("account")]
         public async Task<IActionResult> LoginWithBasicUser(Authentication authentication)
         {
             if (String.IsNullOrWhiteSpace(authentication.Password) || String.IsNullOrWhiteSpace(authentication.UserName))
@@ -45,6 +47,7 @@ namespace FudSpin.Api.Controllers
 
         [HttpPost]
         [Route("[controller]/Register")]
+        //[EnableRateLimiting("account")]
         public async Task<IActionResult> CreateUser(CreateUserDTO user)
         {
             if (user is null)
