@@ -95,7 +95,7 @@ namespace FudSpin.Api.Controllers
             }
             List<string> ColorList = new() { "#7DB9B6", "#E96479", "#AD7BE9", "#3E54AC", "#183A1D", "#B3005E", "#18122B", "#F94A29", "#FCE22A", "#B99B6B", "#698269", "#F1DBBF", "#AA5656" };
             Random random = new();
-            for (int i = 0; i < spinner.SpinnerDetails.Count; i++)
+            foreach (SpinnerDetailAddDTO item in spinner.SpinnerDetails)
             {
                 int randomIndex = random.Next(ColorList.Count - 1);
                 await spinnerDetailService.MultipleAdd(new List<SpinnerDetail>()
@@ -103,8 +103,8 @@ namespace FudSpin.Api.Controllers
                     new SpinnerDetail()
                     {
                         Color = ColorList[randomIndex],
-                        Name = spinner.SpinnerDetails[i].Name,
-                        Description = spinner.SpinnerDetails[i].Description,
+                        Name = item.Name,
+                        Description = item.Description,
                         SpinnerMasterID = MasterID
                     }
                 });

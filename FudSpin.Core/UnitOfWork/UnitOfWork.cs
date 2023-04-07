@@ -28,6 +28,7 @@ namespace FudSpin.Core.UnitOfWork
             using TransactionScope tScope = new(TransactionScopeAsyncFlowOption.Enabled);
             await DataContext.SaveChangesAsync();
             tScope.Complete();
+            await Task.CompletedTask;
         }
 
         public IGenericRepository<T> GetRepository<T>() where T : class
