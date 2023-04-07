@@ -4,11 +4,12 @@ namespace FudSpin.Api.Filters
 {
     public class ActionFilter : IAsyncActionFilter
     {
-        public Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            string controller = (string)context.RouteData.Values["Controller"];
+            string action = (string)context.RouteData.Values["action"];
             string authKey = context.HttpContext.Request.Headers["Authorization"];
-            next();
-            return Task.CompletedTask;
+            await next();
         }
     }
 }
