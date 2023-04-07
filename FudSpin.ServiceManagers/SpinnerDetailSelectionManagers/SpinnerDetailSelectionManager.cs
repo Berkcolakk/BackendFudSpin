@@ -22,7 +22,8 @@ namespace FudSpin.ServiceManagers.SpinnerDetailSelectionManagers
 
         public async Task<List<SpinnerDetailSelection>> GetAllSelections()
         {
-            return await context.SpinnerDetailSelection.Include(x => x.IPSpinnerDetailSelection).ThenInclude(x => x.IPSpinnerDetail).ToListAsync();
+            List<SpinnerDetailSelection> spinnerDetailSelections = await context.SpinnerDetailSelection.Include(x => x.IPSpinnerDetailSelection).ThenInclude(x => x.IPSpinnerDetail).ToListAsync();
+            return await Task.FromResult(spinnerDetailSelections);
         }
     }
 }

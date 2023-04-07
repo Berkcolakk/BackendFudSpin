@@ -17,6 +17,7 @@ using FudSpin.Core.UnitOfWork;
 using FudSpin.Services.Services.UserServices;
 using FudSpin.ServiceManagers.UserManagers;
 using System.Reflection;
+using FudSpin.Api.Filters;
 
 namespace FudSpin.Business.DependencyResolvers
 {
@@ -25,6 +26,7 @@ namespace FudSpin.Business.DependencyResolvers
         public static void AddDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             //services.AddDbContext<ProjectContext>(x => x.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
+            services.AddScoped<ActionFilter>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddDbContext<ProjectContext>();

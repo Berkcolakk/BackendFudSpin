@@ -38,18 +38,9 @@ namespace FudSpin.Services.Services.AccountServices
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(userLoginDTO.UserName))
-                {
-                    throw new ArgumentException($"'{nameof(userLoginDTO.UserName)}' cannot be null or whitespace.", nameof(userLoginDTO.UserName));
-                }
-
-                if (string.IsNullOrWhiteSpace(userLoginDTO.Password))
-                {
-                    throw new ArgumentException($"'{nameof(userLoginDTO.Password)}' cannot be null or whitespace.", nameof(userLoginDTO.Password));
-                }
-
                 User HasUser = await accountManager.Authentication(userLoginDTO, UserConstant.BasicUser);
-                return tokenService.GenerateToken(HasUser);
+                string result = tokenService.GenerateToken(HasUser);
+                return await Task.FromResult(result);
             }
             catch (Exception)
             {
@@ -64,16 +55,16 @@ namespace FudSpin.Services.Services.AccountServices
                 user.Password = cryptographyProcessor.GenerateHash(user.Password);
                 await userService.Insert(user);
                 await Save();
-                return true;
+                return await Task.FromResult(true);
             }
             catch (Exception)
             {
-                return false;
+                return await Task.FromResult(false);
             }
         }
         public async Task Save()
         {
-            await unitOfWork.Save();
+            await Task.FromResult(unitOfWork.Save());
         }
     }
 }

@@ -44,7 +44,7 @@ namespace FudSpin.Services.Services.UserServices
                 }
 
                 User user = await userService.Get(x => x.ID == UserID && x.IsActive);
-                return user;
+                return await Task.FromResult(user);
             }
             catch (Exception)
             {
@@ -71,11 +71,11 @@ namespace FudSpin.Services.Services.UserServices
 
                 Language lang = await languageService.GetLanguage(key);
 
-                return user.Language switch
+                return await Task.FromResult(user.Language switch
                 {
                     nameof(lang.Lang) => lang.Lang ?? key,
                     _ => key,
-                };
+                });
             }
             catch (Exception)
             {
@@ -86,7 +86,7 @@ namespace FudSpin.Services.Services.UserServices
 
         public async Task Save()
         {
-            await unitOfWork.Save();
+            await Task.FromResult(unitOfWork.Save());
         }
     }
 }

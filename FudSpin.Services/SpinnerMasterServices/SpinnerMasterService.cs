@@ -67,11 +67,11 @@ namespace FudSpin.Services.SpinnerMasterServices
                 spinnerMasterDTOs.Add(spinnerMasterDTO);
             }
 
-            return spinnerMasterDTOs;
+            return await Task.FromResult(spinnerMasterDTOs);
         }
         public async Task Save()
         {
-            await unitOfWork.Save();
+            await Task.FromResult(unitOfWork.Save());
         }
     }
 }

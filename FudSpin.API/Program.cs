@@ -25,10 +25,13 @@ using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 using Microsoft.Extensions.Options;
 using System.Globalization;
+using FudSpin.Api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ContractResolver = new DefaultContractResolver());
+builder.Services
+    .AddControllers(x => x.Filters.AddService<ActionFilter>())
+    .AddNewtonsoftJson(x => x.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 builder.Services.AddEndpointsApiExplorer();
 
