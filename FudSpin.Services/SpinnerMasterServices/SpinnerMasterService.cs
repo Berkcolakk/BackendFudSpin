@@ -29,11 +29,11 @@ namespace FudSpin.Services.SpinnerMasterServices
             {
                 await spinnerService.Insert(spinnerMaster);
                 await Save();
-                return await Task.FromResult(spinnerMaster.ID);
+                return await Task.FromResult(spinnerMaster.ID).ConfigureAwait(false);
             }
             catch (Exception)
             {
-                return await Task.FromResult(Guid.Empty);
+                return await Task.FromResult(Guid.Empty).ConfigureAwait(false);
             }
         }
         /// <summary>
@@ -67,11 +67,11 @@ namespace FudSpin.Services.SpinnerMasterServices
                 spinnerMasterDTOs.Add(spinnerMasterDTO);
             }
 
-            return await Task.FromResult(spinnerMasterDTOs);
+            return await Task.FromResult(spinnerMasterDTOs).ConfigureAwait(false);
         }
         public async Task Save()
         {
-            await Task.FromResult(unitOfWork.Save());
+            await Task.FromResult(unitOfWork.Save()).ConfigureAwait(false);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace FudSpin.Services.SpinnerDetailServices
                 SpinnerListDTOs.SpinnerList.Add(spinnerListDTO);
             }
 
-            return await Task.FromResult(SpinnerListDTOs);
+            return await Task.FromResult(SpinnerListDTOs).ConfigureAwait(false);
         }
 
         public async Task<bool> MultipleAdd(List<SpinnerDetail> spinnerDetail)
@@ -57,16 +57,16 @@ namespace FudSpin.Services.SpinnerDetailServices
             {
                 await spinnerDetailService.Insert(spinnerDetail);
                 await Save();
-                return await Task.FromResult(true);
+                return await Task.FromResult(true).ConfigureAwait(false);
             }
             catch (Exception)
             {
-                return await Task.FromResult(false);
+                return await Task.FromResult(false).ConfigureAwait(false);
             }
         }
         public async Task Save()
         {
-            await Task.FromResult(unitOfWork.Save());
+            await Task.FromResult(unitOfWork.Save()).ConfigureAwait(false);
         }
     }
 }

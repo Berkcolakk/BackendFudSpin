@@ -27,7 +27,7 @@ namespace FudSpin.ServiceManagers.AccountManagers
             userLoginDTO.Password = cryptographyProcessor.GenerateHash(userLoginDTO.Password);
 
             User user = await context.User.Include(x => x.ParameterDetail_Nationality).FirstOrDefaultAsync(x => x.UserName.Equals(userLoginDTO.UserName) && x.Password.Equals(userLoginDTO.Password) && x.IsActive);
-            return await Task.FromResult(user);
+            return await Task.FromResult(user).ConfigureAwait(false);
         }
     }
 }

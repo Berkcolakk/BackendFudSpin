@@ -24,7 +24,7 @@ namespace FudSpin.ServiceManagers.SpinnerMasterManagers
         public async Task<List<SpinnerDetail>> GetAllSpinnerDetailBySpinnerMasterID(Guid MasterID)
         {
             List<SpinnerDetail> spinnerDetail = await context.SpinnerDetail.Include(x => x.IPSpinnerDetail).Where(x => x.SpinnerMasterID == MasterID && x.IsActive).ToListAsync();
-            return await Task.FromResult(spinnerDetail);
+            return await Task.FromResult(spinnerDetail).ConfigureAwait(false);
         }
     }
 }

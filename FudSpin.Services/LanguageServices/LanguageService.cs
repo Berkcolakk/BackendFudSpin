@@ -18,7 +18,7 @@ namespace FudSpin.Services.LanguageServices
         public async Task<Language> GetLanguage(string key)
         {
             Language language = await languageService.Get(x => string.Equals(x.Key, key, StringComparison.OrdinalIgnoreCase) && x.IsActive);
-            return await Task.FromResult(language);
+            return await Task.FromResult(language).ConfigureAwait(false);
         }
     }
 }

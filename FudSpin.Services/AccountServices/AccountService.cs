@@ -40,7 +40,7 @@ namespace FudSpin.Services.Services.AccountServices
             {
                 User HasUser = await accountManager.Authentication(userLoginDTO, UserConstant.BasicUser);
                 string result = tokenService.GenerateToken(HasUser);
-                return await Task.FromResult(result);
+                return await Task.FromResult(result).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -55,16 +55,16 @@ namespace FudSpin.Services.Services.AccountServices
                 user.Password = cryptographyProcessor.GenerateHash(user.Password);
                 await userService.Insert(user);
                 await Save();
-                return await Task.FromResult(true);
+                return await Task.FromResult(true).ConfigureAwait(false);
             }
             catch (Exception)
             {
-                return await Task.FromResult(false);
+                return await Task.FromResult(false).ConfigureAwait(false);
             }
         }
         public async Task Save()
         {
-            await Task.FromResult(unitOfWork.Save());
+            await Task.FromResult(unitOfWork.Save()).ConfigureAwait(false);
         }
     }
 }
