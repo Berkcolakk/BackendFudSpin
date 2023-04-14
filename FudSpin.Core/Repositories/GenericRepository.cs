@@ -27,7 +27,7 @@ namespace FudSpin.Core.Repositories
 
         protected virtual DbSet<T> Entities => _entities ?? DataContext.Set<T>();
 
-        public virtual async Task<T> Get(Expression<Func<T, bool>> predicate) => await Task.FromResult( await Entities.AsNoTrackingWithIdentityResolution().SingleOrDefaultAsync(predicate));
+        public virtual async Task<T> Get(Expression<Func<T, bool>> predicate) => await Task.FromResult( await Table.SingleOrDefaultAsync(predicate));
 
         public virtual async ValueTask<T> GetById(object id) => await Task.FromResult( await Entities.FindAsync(id));
 
