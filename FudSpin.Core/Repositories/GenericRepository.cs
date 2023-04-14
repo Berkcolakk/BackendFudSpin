@@ -22,21 +22,20 @@ namespace FudSpin.Core.Repositories
 
         protected ProjectContext DataContext => _context ??= DatabaseFactory.Get();
 
-        public virtual IQueryable<T> Table => Entities;
+        public virtual IQueryable<T> Table => Entities.AsNoTrackingWithIdentityResolution();
 
-        public virtual IQueryable<T> TableNoTracking => Entities.AsNoTracking();
 
         protected virtual DbSet<T> Entities => _entities ?? DataContext.Set<T>();
 
-        public virtual async Task<T> Get(Expression<Func<T, bool>> predicate) => await Task.FromResult( await Entities.SingleOrDefaultAsync(predicate));
+        public virtual async Task<T> Get(Expression<Func<T, bool>> predicate) => await Task.FromResult( await Entities.AsNoTrackingWithIdentityResolution().SingleOrDefaultAsync(predicate));
 
         public virtual async ValueTask<T> GetById(object id) => await Task.FromResult( await Entities.FindAsync(id));
 
-        public virtual async Task<List<T>> GetMany(Expression<Func<T, bool>> predicate) =>await Task.FromResult( await Entities.Where(predicate).ToListAsync());
+        public virtual async Task<List<T>> GetMany(Expression<Func<T, bool>> predicate) =>await Task.FromResult( await Table.Where(predicate).ToListAsync());
 
-        public async virtual Task<List<T>> GetManyNoTracking(Expression<Func<T, bool>> predicate) => await Task.FromResult(await TableNoTracking.Where(predicate).ToListAsync());
+        public async virtual Task<List<T>> GetManyNoTracking(Expression<Func<T, bool>> predicate) => await Task.FromResult(await Table.Where(predicate).ToListAsync());
 
-        public async Task<List<T>> GetAll() => await Task.FromResult(await Entities.ToListAsync());
+        public async Task<List<T>> GetAll() => await Task.FromResult(await Table.ToListAsync());
 
         public virtual async Task Insert(T entity)
         {
